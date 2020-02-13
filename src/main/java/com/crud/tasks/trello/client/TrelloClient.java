@@ -25,7 +25,7 @@ public class TrelloClient {
     @Autowired
     private RestTemplate restTemplate;
     public List<TrelloBoardDto> getTrelloBoards() {
-           URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/members/kodillauser/boards")//trelloConfig.getTrelloUser())
+           URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + trelloConfig.getTrelloUser())//"/members/kodillauser/boards")//trelloConfig.getTrelloUser())
                    .queryParam("key", trelloConfig.getTrelloAppKey())
                    .queryParam("token", trelloConfig.getTrelloToken())
                    .queryParam("fields", "name,id")//.build().encode().toUri();
@@ -40,7 +40,20 @@ public class TrelloClient {
         }
     }
     public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) throws URISyntaxException {
-       URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
+      // URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
+        URI uri = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/cards")
+                .queryParam("key", trelloConfig.getTrelloAppKey())
+                .queryParam("token", trelloConfig.getTrelloToken())
+                .queryParam("name", trelloCardDto.getName())
+                .queryParam("desc", trelloCardDto.getDescription())
+                .queryParam("pos", trelloCardDto.getPos())
+                .queryParam("idList", trelloCardDto.getListId()).build().encode().toUri();
+               // .queryParam("badges", "attachmentsByType")
+                //          .queryParam("votes", trelloCardDto.getBadges().getVotes())
+                //.queryParam("attachmentsByType", "trello")
+               // .queryParam("trello", "board,card")
+              //  .queryParam("board", trelloCardDto.getBadges().getAttachmentByType().getTrello().getBoard())
+              //  .queryParam("card", trelloCardDto.getBadges().getAttachmentByType().getTrello().getCard()).build().encode().toUri();
        return restTemplate.postForObject(uri,null,CreatedTrelloCard.class);
     }
 }

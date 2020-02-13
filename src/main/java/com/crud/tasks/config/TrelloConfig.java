@@ -14,5 +14,7 @@ public class TrelloConfig {
     private String trelloAppKey;
     @Value("${trello.app.token}")
     private String trelloToken;
-
+    @Value("/members/jan_hulanicki/boards")
+    private String trelloUser;
+   // trello.app.user=/members/jan_hulanicki/boards
 }
