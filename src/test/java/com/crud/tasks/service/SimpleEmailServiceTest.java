@@ -17,11 +17,10 @@ public class SimpleEmailServiceTest {
     private SimpleEmailService simpleEmailService;
     @Mock
     private JavaMailSender javaMailSender;
-
     @Test
     public void shouldSendEmail(){
         //Given
-        Mail mail = new Mail("test@test.com","","Test","Test");
+        Mail mail = new Mail("test@test.com","Test","Test");
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
@@ -31,6 +30,4 @@ public class SimpleEmailServiceTest {
         //Then
         verify(javaMailSender, times(1)).send(mailMessage);
     }
-
-
 }
