@@ -3,7 +3,7 @@ import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
-import com.crud.tasks.trello.client.CreatedTrelloCard;
+import com.crud.tasks.trello.client.CreatedTrelloCartDto;
 import com.crud.tasks.trello.client.TrelloClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,8 @@ public class TrelloService {
     public List<TrelloBoardDto> fetchTrelloBoards() {
         return trelloClient.getTrelloBoards();
     }
-    public CreatedTrelloCard createTrelloCard(final TrelloCardDto trelloCardDto) throws URISyntaxException {
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+    public CreatedTrelloCartDto createTrelloCard(final TrelloCardDto trelloCardDto) throws URISyntaxException {
+        CreatedTrelloCartDto newCard = trelloClient.createNewCard(trelloCardDto);
         ofNullable(newCard).ifPresent(card-> emailService.send(new Mail(adminConfig.getAdminMail(),SUBJECT, "New card: "+ trelloCardDto.getName() + "has been created on your Trello account")));
         return newCard;
     }

@@ -37,7 +37,7 @@ public class TrelloClient {
             return new ArrayList<>();
         }
     }
-    public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) throws URISyntaxException {
+    public CreatedTrelloCartDto createNewCard(TrelloCardDto trelloCardDto) throws URISyntaxException {
         URI uri = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/cards")
                 .queryParam("key", trelloConfig.getTrelloAppKey())
                 .queryParam("token", trelloConfig.getTrelloToken())
@@ -45,6 +45,6 @@ public class TrelloClient {
                 .queryParam("desc", trelloCardDto.getDescription())
                 .queryParam("pos", trelloCardDto.getPos())
                 .queryParam("idList", trelloCardDto.getListId()).build().encode().toUri();
-                return restTemplate.postForObject(uri,null,CreatedTrelloCard.class);
+                return restTemplate.postForObject(uri,null, CreatedTrelloCartDto.class);
     }
 }

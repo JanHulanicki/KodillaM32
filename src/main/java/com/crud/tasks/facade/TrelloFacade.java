@@ -1,19 +1,37 @@
 package com.crud.tasks.facade;
 
+import com.crud.tasks.domain.TrelloBoard;
 import com.crud.tasks.domain.TrelloBoardDto;
+import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.service.TrelloService;
+import com.crud.tasks.trello.client.CreatedTrelloCartDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class TrelloFacade {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrelloFacade.class);
     @Autowired
     private TrelloService trelloService;
+    @Autowired
+    private TrelloMapper trelloMapper;
 
-    public List<TrelloFacade> fetchTrelloBoards() {
-        List<TrelloBoardDto> trelloBoards = trelloService.fetchTrelloBoards();
+    public List<TrelloBoardDto> fetchTrelloBoards() {
+        List<TrelloBoard> trelloBoards = trelloMapper.mapToBoards(trelloService.fetchTrelloBoards());
+        LOGGER.info("Starting filtering boards ...");
+        List<TrelloBoard> filteredBoards = trelloBoards.stream()
+                .filter(trelloBoard -> !trelloBoard.getName().equalsIgnoreCase("test"))
+                .collect(Collectors.toList());
+        LOGGER.info("Boards have been filtered.Current list size: " + filteredBoards.size());
+        return trelloMapper.maptoBoardsDto(filteredBoards);
     }
+    public CreatedTrelloCartDto createCard(final TrelloCardDto trelloCardDto) {
 
+    }
 }
