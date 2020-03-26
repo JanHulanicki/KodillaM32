@@ -19,7 +19,7 @@ public class SimpleEmailServiceTest {
     private JavaMailSender javaMailSender;
     @Test
     public void shouldSendEmail(){
-        //Given
+        //Givenh
         Mail mail = new Mail("test@test.com","Test","Test");
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
