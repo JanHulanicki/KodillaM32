@@ -18,4 +18,13 @@ public class TrelloListDto {
     private String name;
     @JsonProperty("closed")
     private boolean isClosed;
+
+    @Override
+    public String toString() {
+        return "TrelloListDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", isClosed=" + isClosed +
+                '}';
+    }
 }
