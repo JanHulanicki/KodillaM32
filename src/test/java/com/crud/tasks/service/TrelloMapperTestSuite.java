@@ -140,5 +140,6 @@ public class TrelloMapperTestSuite {
         assertEquals(trelloCard.getDescription(), "description1");
         assertEquals(trelloCard.getPos(), "pos1");
         assertEquals(trelloCard.getListId(), "listId1");
+
     }
 }
