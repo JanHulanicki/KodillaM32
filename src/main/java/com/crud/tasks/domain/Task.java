@@ -2,6 +2,7 @@ package com.crud.tasks.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity(name="tasks")
 public class Task {
     @javax.persistence.Id

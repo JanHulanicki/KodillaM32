@@ -127,4 +127,18 @@ public class TrelloMapperTestSuite {
         assertEquals(trelloCardDto.getPos(), "pos1");
         assertEquals(trelloCardDto.getListId(), "listId1");
     }
+
+    @Test
+    public void testCreateTrelloCard() {
+        TrelloCardDto trelloCardDto = new TrelloCardDto();
+        trelloCardDto.setName("name1");
+        trelloCardDto.setDescription("description1");
+        trelloCardDto.setPos("pos1");
+        trelloCardDto.setListId("listId1");
+        TrelloCard trelloCard = trelloMapper.mapToCard(trelloCardDto);
+        assertEquals(trelloCard.getName(), "name1");
+        assertEquals(trelloCard.getDescription(), "description1");
+        assertEquals(trelloCard.getPos(), "pos1");
+        assertEquals(trelloCard.getListId(), "listId1");
+    }
 }

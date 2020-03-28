@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class TrelloFacadeTest {
     private TrelloValidator trelloValidator;
     @Mock
     private TrelloMapper trelloMapper;
+    @Autowired
+    private TrelloMapper trelloMapperAw;
 
     @Test
     public void shouldFetchEmptyList() {
@@ -59,6 +62,7 @@ public class TrelloFacadeTest {
         assertNotNull(trelloBoardDtos);
         assertEquals(0, trelloBoardDtos.size());
     }
+
     @Test
     public void shouldFetchTrelloBoards() {
         //Given
@@ -84,6 +88,15 @@ public class TrelloFacadeTest {
 
         //Then
         assertNotNull(trelloBoardDtos);
-        assertEquals(0, trelloBoardDtos.size());
+        assertEquals(1, trelloBoardDtos.size());
+        trelloBoardDtos.forEach(trelloBoardDto -> {
+            assertEquals("1", trelloBoardDto.getId());
+            assertEquals("test", trelloBoardDto.getName());
+            trelloBoardDto.getLists().forEach(trelloListDto -> {
+                assertEquals("1", trelloListDto.getId());
+                assertEquals("test_list", trelloListDto.getName());
+                assertEquals(false, trelloListDto.isClosed());
+            });
+        });
     }
 }
