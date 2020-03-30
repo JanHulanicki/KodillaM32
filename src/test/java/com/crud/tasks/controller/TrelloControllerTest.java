@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,7 +36,7 @@ public class TrelloControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private TrelloFacade trelloFacade;
-    @Autowired
+    @MockBean
     private TrelloService trelloService;
 
     @Test
@@ -55,7 +54,7 @@ public class TrelloControllerTest {
     public void shouldFetchTrelloBoards() throws Exception {
         //Given
         List<TrelloListDto> trelloList = new ArrayList<>();
-        trelloList.add(new TrelloListDto("1", "Test list", false));
+        trelloList.add(new TrelloListDto("1", "Test List", false));
         List<TrelloBoardDto> trelloBoards = new ArrayList<>();
         trelloBoards.add(new TrelloBoardDto("1", "Test Task", trelloList));
         when(trelloFacade.fetchTrelloBoards()).thenReturn(trelloBoards);
@@ -71,7 +70,6 @@ public class TrelloControllerTest {
                 .andExpect(jsonPath("$[0].lists[0].id", is("1")))
                 .andExpect(jsonPath("$[0].lists[0].name", is("Test List")))
                 .andExpect(jsonPath("$[0].lists[0].closed", is(false)));
-
     }
 
     @Test
@@ -89,8 +87,6 @@ public class TrelloControllerTest {
                 .content(jsonContent))
                 .andExpect(jsonPath("$.id", is("323")))
                 .andExpect(jsonPath("$.name", is("Test")))
-                .andExpect(jsonPath("$.shortUrl",is("http://test.com")));
-
+                .andExpect(jsonPath("$.shortUrl", is("http://test.com")));
     }
-
 }

@@ -13,7 +13,9 @@ repositories {
 	mavenCentral()
 	jcenter()
 }
-
+test {
+	useJUnitPlatform()
+}
 dependencies {
 
 	compile('org.springframework.boot:spring-boot-starter-web')
@@ -35,7 +37,5 @@ dependencies {
 	}
 }
 
-//test {
-//	useJUnitPlatform()
-//}
+
 
